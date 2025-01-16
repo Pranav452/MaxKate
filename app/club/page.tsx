@@ -27,7 +27,7 @@ export default function ClubPage() {
       {/* Content */}
       <div className="relative min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-6xl font-bold text-white mb-4 animate-pulse">
-          MAX'S CLUB
+          MAX&apos;S CLUB
         </h1>
         
         {/* Enter Button */}
@@ -38,7 +38,7 @@ export default function ClubPage() {
                        transform transition-all duration-500 hover:scale-110 hover:bg-white/20 hover:border-white
                        animate-pulse"
             >
-              ENTER MAX'S CLUB
+              ENTER MAX&apos;S CLUB
             </button>
           </Link>
         </div>
