@@ -184,7 +184,7 @@ export default function StagePage() {
 
       {/* Navigation */}
       <NavigationArrow href="/vinyl" direction="left" />
-      <NavigationArrow href="/booking" direction="right" />
+      <NavigationArrow href="/club" direction="right" />
 
       {/* Main Content */}
       <div className="relative flex-1 flex flex-col gap-8 p-12">
