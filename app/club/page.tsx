@@ -43,7 +43,28 @@ export default function ClubPage() {
           </Link>
         </div>
 
-        {/* Right Arrow Navigation */}
+        {/* Navigation */}
+        <Link 
+          href="/stage"
+          className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 group"
+        >
+          <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+            <svg 
+              className="w-8 h-8 text-white transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M9 5l7 7-7 7" 
+              />
+            </svg>
+          </div>
+        </Link>
+
         <Link 
           href="/vinyl"
           className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 group"

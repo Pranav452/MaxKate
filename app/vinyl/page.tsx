@@ -265,13 +265,35 @@ export default function VinylPage() {
       </div>
 
       {/* Playlist Button */}
-      <button
-        onClick={() => setShowPlaylist(!showPlaylist)}
-        className="fixed top-8 right-8 z-50 bg-white/10 backdrop-blur-sm px-6 py-3 
-                 rounded-full text-white border border-white/20 hover:bg-white/20"
-      >
-        Playlist
-      </button>
+      <div className="fixed top-8 right-8 z-50 flex items-center gap-4">
+        <button
+          onClick={() => setShowPlaylist(!showPlaylist)}
+          className="bg-white/10 backdrop-blur-sm px-6 py-3 
+                   rounded-full text-white border border-white/20 hover:bg-white/20"
+        >
+          Playlist
+        </button>
+
+        <Link
+          href="/booking"
+          className="group bg-white/10 backdrop-blur-sm p-4 rounded-full border border-white/20 
+                   hover:bg-white/20 transition-all duration-300"
+        >
+          <svg 
+            className="w-6 h-6 text-white transform transition-transform duration-300 group-hover:translate-x-1" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M9 5l7 7-7 7" 
+            />
+          </svg>
+        </Link>
+      </div>
 
       {/* Playlist Dropdown */}
       {showPlaylist && (
@@ -293,6 +315,49 @@ export default function VinylPage() {
           ))}
         </div>
       )}
+
+      {/* Navigation */}
+      <Link
+        href="/club"
+        className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 group"
+      >
+        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+          <svg 
+            className="w-8 h-8 text-white transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M9 5l7 7-7 7" 
+            />
+          </svg>
+        </div>
+      </Link>
+
+      <Link
+        href="/booking"
+        className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 group"
+      >
+        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+          <svg 
+            className="w-8 h-8 text-white transform transition-transform duration-300 group-hover:translate-x-1" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M9 5l7 7-7 7" 
+            />
+          </svg>
+        </div>
+      </Link>
 
       {/* Back to Club */}
       <Link
