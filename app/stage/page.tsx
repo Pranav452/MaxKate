@@ -183,7 +183,7 @@ export default function StagePage() {
       </div>
 
       {/* Navigation */}
-      <NavigationArrow href="/vinyl" direction="left" />
+      <NavigationArrow href="/" direction="left" />
       <NavigationArrow href="/club" direction="right" />
 
       {/* Main Content */}
