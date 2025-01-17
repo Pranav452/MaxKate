@@ -60,52 +60,6 @@ const NavigationArrow = ({ href, direction }: { href: string; direction: 'left' 
   </Link>
 );
 
-const ShowCard = ({ show, onSelect, onBook }: { 
-  show: Show; 
-  onSelect: (show: Show) => void;
-  onBook: () => void;
-}) => (
-  <div
-    onClick={() => onSelect(show)}
-    className={cn(
-      "p-4 rounded-xl border transition-all duration-300 cursor-pointer",
-      show.isPast 
-        ? "border-white/10 hover:border-white/20"
-        : "border-purple-500/50 hover:border-purple-500"
-    )}
-  >
-    <div className="flex flex-col gap-2">
-      <div className="text-sm text-white/60">
-        {show.date.toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric'
-        })}
-      </div>
-      <div className="text-lg font-medium text-white">
-        {show.title}
-      </div>
-      <div className="text-sm text-white/60">
-        {show.venue}
-      </div>
-      <div className="text-sm text-white/60">
-        {show.description}
-      </div>
-      {!show.isPast && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onBook();
-          }}
-          className="mt-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
-        >
-          Book Show
-        </button>
-      )}
-    </div>
-  </div>
-);
-
 const Calendar = ({
   currentMonth,
   currentYear,
@@ -204,12 +158,13 @@ const Calendar = ({
 
 // Main Page Component
 export default function StagePage() {
-  // State
-  const [selectedShow, setSelectedShow] = useState<Show | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+
+  const selectedShow = SHOWS_DATA.find(show => 
+    show.date.toDateString() === selectedDate?.toDateString()
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -228,8 +183,8 @@ export default function StagePage() {
       </div>
 
       {/* Navigation */}
-      <NavigationArrow href="/" direction="left" />
-      <NavigationArrow href="/club" direction="right" />
+      <NavigationArrow href="/vinyl" direction="left" />
+      <NavigationArrow href="/booking" direction="right" />
 
       {/* Main Content */}
       <div className="relative flex-1 flex flex-col gap-8 p-12">
@@ -240,8 +195,6 @@ export default function StagePage() {
           </h1>
           <div className="h-0.5 w-48 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50" />
         </header>
-
-      
 
         {/* Main Grid */}
         <div className="grid grid-cols-[1fr,400px] gap-8 p-24">
@@ -267,7 +220,7 @@ export default function StagePage() {
                 <div className="opacity-0 animate-slide-up" 
                      style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
                   <Button
-                    onClick={() => setIsDialogOpen(true)}
+                    onClick={() => window.location.href = '/booking'}
                     className="bg-purple-500 text-white px-8 py-6 rounded-full font-semibold 
                              transform transition-all duration-300 hover:scale-105 hover:bg-purple-600
                              shadow-lg shadow-purple-500/25"
@@ -297,61 +250,6 @@ export default function StagePage() {
           </div>
         </div>
       </div>
-  {/* Shows List - Simplified */}
-  {/* <section className="bg-black/60 backdrop-blur-md rounded-2xl p-6 border border-white/10">
-          <div className="mb-4">
-            <Label className="text-lg font-bold text-white">Shows</Label>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {SHOWS_DATA.map(show => (
-              <ShowCard
-                key={show.id}
-                show={show}
-                onSelect={setSelectedShow}
-                onBook={() => setIsDialogOpen(true)}
-              />
-            ))}
-          </div>
-        </section> */}
-      {/* Booking Dialog */}
-      {/* <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Book Show</DialogTitle>
-            <DialogDescription>
-              {selectedShow && (
-                <div className="space-y-4">
-                  <div>
-                    <Label>Date</Label>
-                    <div className="text-white">
-                      {selectedShow.date.toLocaleDateString('en-US', {
-                        weekday: 'long',
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </div>
-                  </div>
-                  <div>
-                    <Label>Venue</Label>
-                    <div className="text-white">{selectedShow.venue}</div>
-                  </div>
-                  <div>
-                    <Label>Description</Label>
-                    <div className="text-white">{selectedShow.description}</div>
-                  </div>
-                  <button
-                    onClick={() => setIsDialogOpen(false)}
-                    className="w-full px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
-                  >
-                    Proceed to Payment
-                  </button>
-                </div>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog> */}
     </div>
   );
 } 
