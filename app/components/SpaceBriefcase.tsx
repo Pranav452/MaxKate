@@ -2,7 +2,11 @@
 
 import { useEffect } from 'react';
 
-export default function SpaceBriefcase() {
+interface SpaceBriefcaseProps {
+  isDaylight: boolean;
+}
+
+export default function SpaceBriefcase({ isDaylight }: SpaceBriefcaseProps) {
   useEffect(() => {
     // Create stars
     const createStars = () => {
@@ -79,18 +83,18 @@ export default function SpaceBriefcase() {
 
   return (
     <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden">
-      {/* Extended Stars Background */}
-      <div id="stars-container" className="fixed inset-0 overflow-hidden">
+      {/* Stars Container (visible only in night mode) */}
+      <div id="stars-container" className={`fixed inset-0 overflow-hidden transition-opacity duration-1000 ${isDaylight ? 'opacity-0' : 'opacity-100'}`}>
         {/* Stars will be dynamically added here */}
       </div>
 
-      {/* Shooting Stars Container */}
-      <div id="shooting-stars-container" className="fixed inset-0 overflow-hidden">
+      {/* Shooting Stars Container (visible only in night mode) */}
+      <div id="shooting-stars-container" className={`fixed inset-0 overflow-hidden transition-opacity duration-1000 ${isDaylight ? 'opacity-0' : 'opacity-100'}`}>
         {/* Shooting stars will be dynamically added here */}
       </div>
 
-      {/* Large Background Nebulas */}
-      <div className="fixed inset-0 overflow-hidden">
+      {/* Nebulas (visible only in night mode) */}
+      <div className={`fixed inset-0 overflow-hidden transition-opacity duration-1000 ${isDaylight ? 'opacity-0' : 'opacity-100'}`}>
         <div className="nebula nebula-large bg-purple-500/10" 
              style={{ top: '-20%', left: '-20%', animationDelay: '0s' }} />
         <div className="nebula nebula-large bg-blue-500/10" 
@@ -110,26 +114,50 @@ export default function SpaceBriefcase() {
       </div>
 
       {/* Briefcase Container */}
-      <div className="relative w-[800px] h-[500px] mt-32">
+      <div className="relative w-[1200px] h-[700px] mt-32">
         {/* Briefcase Outer Frame */}
-        <div className="absolute inset-0 p-4 float briefcase-modern">
+        <div className={`absolute inset-0 p-4 float rounded-3xl ${
+          isDaylight 
+            ? 'bg-gradient-to-br from-gray-100 to-gray-300 shadow-2xl border border-gray-200/50' 
+            : 'briefcase-modern'
+        } transition-all duration-1000`}>
           {/* Curved Metallic Handle */}
           <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
             {/* Handle Base */}
             <div className="relative w-40 h-8">
               {/* Main Handle Bar */}
-              <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-gray-300 via-gray-400 to-gray-500 rounded-full shadow-lg"></div>
+              <div className={`absolute top-0 left-0 right-0 h-3 rounded-full shadow-lg ${
+                isDaylight
+                  ? 'bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600'
+                  : 'bg-gradient-to-b from-gray-300 via-gray-400 to-gray-500'
+              } transition-colors duration-1000`}></div>
               {/* Side Supports */}
-              <div className="absolute left-0 top-0 w-3 h-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full"></div>
-              <div className="absolute right-0 top-0 w-3 h-8 bg-gradient-to-l from-gray-400 to-gray-500 rounded-full"></div>
+              <div className={`absolute left-0 top-0 w-3 h-8 rounded-full ${
+                isDaylight
+                  ? 'bg-gradient-to-r from-gray-500 to-gray-600'
+                  : 'bg-gradient-to-r from-gray-400 to-gray-500'
+              } transition-colors duration-1000`}></div>
+              <div className={`absolute right-0 top-0 w-3 h-8 rounded-full ${
+                isDaylight
+                  ? 'bg-gradient-to-l from-gray-500 to-gray-600'
+                  : 'bg-gradient-to-l from-gray-400 to-gray-500'
+              } transition-colors duration-1000`}></div>
               {/* Bottom Connectors */}
-              <div className="absolute bottom-0 left-0 w-3 h-2 bg-gray-600 rounded-b-lg"></div>
-              <div className="absolute bottom-0 right-0 w-3 h-2 bg-gray-600 rounded-b-lg"></div>
+              <div className={`absolute bottom-0 left-0 w-3 h-2 rounded-b-lg ${
+                isDaylight ? 'bg-gray-700' : 'bg-gray-600'
+              } transition-colors duration-1000`}></div>
+              <div className={`absolute bottom-0 right-0 w-3 h-2 rounded-b-lg ${
+                isDaylight ? 'bg-gray-700' : 'bg-gray-600'
+              } transition-colors duration-1000`}></div>
             </div>
           </div>
           
           {/* Inner Frame */}
-          <div className="absolute inset-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700">
+          <div className={`absolute inset-4 rounded-2xl border ${
+            isDaylight
+              ? 'bg-gradient-to-br from-gray-200 to-gray-300 border-gray-300/50'
+              : 'bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700'
+          } transition-all duration-1000`}>
             {/* Video Container */}
             <div className="absolute inset-3 overflow-hidden rounded-xl bg-black">
               <video
@@ -142,6 +170,17 @@ export default function SpaceBriefcase() {
                 <source src="/teaser1.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+              
+              {/* Latest Trailer Text Overlay */}
+              <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
+                <div className="flex flex-col items-center">
+                  <div className="text-xs tracking-[0.3em] text-gray-400 mb-1">PRESENTING</div>
+                  <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-white to-purple-300 tracking-wider">
+                    LATEST TEASER
+                  </div>
+                  <div className="h-0.5 w-32 mt-2 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+                </div>
+              </div>
               
               {/* Enhanced Reflection Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40"></div>

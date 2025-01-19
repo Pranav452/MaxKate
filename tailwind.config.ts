@@ -55,7 +55,10 @@ export default {
   			'vinyl-spin': 'vinyl-rotation 2.5s linear infinite',
   			'fade-in-down': 'fadeInDown 0.5s ease-out',
   			'slide-up': 'slideUp 0.3s ease-out forwards',
-  			flicker: 'flicker 2s linear infinite'
+  			flicker: 'flicker 2s linear infinite',
+  			'bird-flight-1': 'bird-flight-1 20s linear infinite',
+  			'bird-flight-2': 'bird-flight-2 25s linear infinite',
+  			'bird-flight-3': 'bird-flight-3 30s linear infinite',
   		},
   		keyframes: {
   			'vinyl-rotation': {
@@ -95,13 +98,34 @@ export default {
   					opacity: '0.4',
   					filter: 'brightness(0.8)'
   				}
-  			}
+  			},
+  			'bird-flight-1': {
+  				'0%': { transform: 'translate(0, 0) rotate(12deg)' },
+  				'50%': { transform: 'translate(90vw, -20vh) rotate(12deg)' },
+  				'50.001%': { transform: 'translate(-10vw, 10vh) rotate(12deg)' },
+  				'100%': { transform: 'translate(0, 0) rotate(12deg)' },
+  			},
+  			'bird-flight-2': {
+  				'0%': { transform: 'translate(0, 0) rotate(-12deg)' },
+  				'50%': { transform: 'translate(-90vw, -15vh) rotate(-12deg)' },
+  				'50.001%': { transform: 'translate(10vw, 15vh) rotate(-12deg)' },
+  				'100%': { transform: 'translate(0, 0) rotate(-12deg)' },
+  			},
+  			'bird-flight-3': {
+  				'0%': { transform: 'translate(0, 0) rotate(6deg)' },
+  				'50%': { transform: 'translate(70vw, -25vh) rotate(6deg)' },
+  				'50.001%': { transform: 'translate(-20vw, 5vh) rotate(6deg)' },
+  				'100%': { transform: 'translate(0, 0) rotate(6deg)' },
+  			},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+  		backgroundImage: {
+  			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],
