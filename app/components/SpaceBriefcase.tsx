@@ -1,12 +1,35 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SpaceBriefcaseProps {
   isDaylight: boolean;
 }
 
+const videos = [
+  {
+    id: 1,
+    src: "/teaser1.mp4",
+    title: "LATEST TEASER"
+  },
+  {
+    id: 2,
+    src: "/teaser1.mp4", // You can replace this with the second video source
+    title: "SECOND TEASER"
+  }
+];
+
 export default function SpaceBriefcase({ isDaylight }: SpaceBriefcaseProps) {
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
+  const handleNextVideo = () => {
+    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+  };
+
+  const handlePreviousVideo = () => {
+    setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length);
+  };
+
   useEffect(() => {
     // Create stars
     const createStars = () => {
@@ -114,7 +137,7 @@ export default function SpaceBriefcase({ isDaylight }: SpaceBriefcaseProps) {
       </div>
 
       {/* Briefcase Container */}
-      <div className="relative w-[1200px] h-[700px] mt-32">
+      <div className="relative w-[1400px] h-[750px] mt-32">
         {/* Briefcase Outer Frame */}
         <div className={`absolute inset-0 p-4 float rounded-3xl ${
           isDaylight 
@@ -161,13 +184,14 @@ export default function SpaceBriefcase({ isDaylight }: SpaceBriefcaseProps) {
             {/* Video Container */}
             <div className="absolute inset-3 overflow-hidden rounded-xl bg-black">
               <video
+                key={videos[currentVideoIndex].src}
                 className="w-full h-full object-cover opacity-90"
                 autoPlay
                 loop
                 playsInline
                 muted
               >
-                <source src="/teaser1.mp4" type="video/mp4" />
+                <source src={videos[currentVideoIndex].src} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               
@@ -176,10 +200,48 @@ export default function SpaceBriefcase({ isDaylight }: SpaceBriefcaseProps) {
                 <div className="flex flex-col items-center">
                   <div className="text-xs tracking-[0.3em] text-gray-400 mb-1">PRESENTING</div>
                   <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-white to-purple-300 tracking-wider">
-                    LATEST TEASER
+                    {videos[currentVideoIndex].title}
                   </div>
                   <div className="h-0.5 w-32 mt-2 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
                 </div>
+              </div>
+
+              {/* Carousel Navigation Arrows */}
+              <button
+                onClick={handlePreviousVideo}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 backdrop-blur-sm 
+                         text-white/70 hover:text-white hover:bg-black/50 transition-all duration-300"
+                aria-label="Previous video"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={handleNextVideo}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 backdrop-blur-sm 
+                         text-white/70 hover:text-white hover:bg-black/50 transition-all duration-300"
+                aria-label="Next video"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex gap-2">
+                {videos.map((video, index) => (
+                  <button
+                    key={video.id}
+                    onClick={() => setCurrentVideoIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentVideoIndex 
+                        ? 'bg-white w-6' 
+                        : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                    aria-label={`Go to video ${index + 1}`}
+                  />
+                ))}
               </div>
               
               {/* Enhanced Reflection Overlay */}

@@ -126,6 +126,10 @@ export default {
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   		},
+  		fontFamily: {
+  			'captain': ['Captain America', 'sans-serif'],
+  			'campus': ['Campus', 'sans-serif'],
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],

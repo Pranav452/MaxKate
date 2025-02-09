@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Captain America';
+  src: url('/fonts/CaptainAmerica.woff2') format('woff2'),
+       url('/fonts/CaptainAmerica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Campus';
+  src: url('/fonts/Campus.woff2') format('woff2'),
+       url('/fonts/Campus.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @keyframes twinkle {
   0%, 100% {
     opacity: 1;
@@ -278,4 +296,84 @@ body {
   position: absolute;
   transform-origin: center;
   will-change: transform, opacity;
+}
+
+.captain-america-text {
+  font-family: 'Roboto Condensed', 'Arial Black', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  text-shadow: 
+    -2px -2px 0 #E31837,
+    2px -2px 0 #E31837,
+    -2px 2px 0 #E31837,
+    2px 2px 0 #E31837,
+    0 0 10px #0A3161,
+    0 0 20px #0A3161,
+    0 0 30px #0A3161;
+  position: relative;
+  display: inline-block;
+  padding: 0.5em 1em;
+  background: linear-gradient(
+    180deg,
+    #0A3161 0%,
+    #0A3161 50%,
+    #E31837 50%,
+    #E31837 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 4px #FFFFFF;
+}
+
+.captain-america-text::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #a3a3a3;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
 }

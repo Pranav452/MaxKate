@@ -103,15 +103,15 @@ export default function Home() {
             <Link href="/contact" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              CONTACT US
+              <img src="/fonts/cantactus.png" alt="Contact Us" className="h-3.5 w-auto" />
             </Link>
           </div>
 
           {/* Center Logo */}
           <h1 className={`${orbitron.className} ${
             isDaylight ? 'text-black' : 'text-white'
-          } font-bold text-3xl absolute left-1/2 transform -translate-x-1/2 tracking-[0.2em] transition-colors duration-1500`}>
-            MAXKATE
+          } font-black text-3xl absolute left-1/2 transform -translate-x-1/2 tracking-[0.001em] transition-colors duration-1500 font-captain`}>
+            MAX KATE
           </h1>
 
           {/* Right CTA */}
