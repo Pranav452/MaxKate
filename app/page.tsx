@@ -90,17 +90,17 @@ export default function Home() {
       }`}>
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           {/* Left Navigation */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-5">
             <Link href="/presskit" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
               <Image src="/fonts/presskit.png" alt="Press Kit" width={100} height={16} className="h-4 w-auto" />
             </Link>
-            <Link href="/tours" className={`${rajdhani.className} ${
+            {/* <Link href="/tours" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
               <Image src="/fonts/tours.png" alt="Tours" width={100} height={16} className="h-4 w-auto" />
-            </Link>
+            </Link> */}
             <Link href="/contact" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
