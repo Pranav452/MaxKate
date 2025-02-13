@@ -41,7 +41,6 @@ export default function ClubInterior() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
