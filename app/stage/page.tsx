@@ -1,8 +1,7 @@
 'use client'
 
-import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -232,7 +231,6 @@ export default function StagePage() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
-  const [error, setError] = useState<string | null>(null);
 
   const selectedShow = SHOWS_DATA.find(show => 
     isSameDay(show.date, selectedDate)
@@ -242,9 +240,6 @@ export default function StagePage() {
     .filter(show => !show.isPast)
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 
-  // Error handling for background image
-  const [bgError, setBgError] = useState(false);
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Background */}
@@ -252,14 +247,6 @@ export default function StagePage() {
         <video src="/shows.mp4" autoPlay muted loop className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
       </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50
-                     bg-red-500/90 text-white px-4 py-2 rounded-lg shadow-lg">
-          {error}
-        </div>
-      )}
 
       {/* Navigation */}
       <NavigationArrow href="/" direction="left" />

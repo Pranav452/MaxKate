@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface MusicGenre {
   title: string;
@@ -45,7 +45,7 @@ export default function ClubInterior() {
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
-  let mouseTimer: NodeJS.Timeout;
+  const mouseTimer = useRef<NodeJS.Timeout>();
 
   // Format time in MM:SS
   const formatTime = (time: number) => {
@@ -75,8 +75,10 @@ export default function ClubInterior() {
   // Handle mouse movement
   const handleMouseMove = () => {
     setShowControls(true);
-    clearTimeout(mouseTimer);
-    mouseTimer = setTimeout(() => {
+    if (mouseTimer.current) {
+      clearTimeout(mouseTimer.current);
+    }
+    mouseTimer.current = setTimeout(() => {
       setShowControls(false);
     }, 3000); // Hide controls after 3 seconds of no mouse movement
   };
@@ -139,7 +141,9 @@ export default function ClubInterior() {
   // Cleanup mouse timer
   useEffect(() => {
     return () => {
-      clearTimeout(mouseTimer);
+      if (mouseTimer.current) {
+        clearTimeout(mouseTimer.current);
+      }
     };
   }, []);
 

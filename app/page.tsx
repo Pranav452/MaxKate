@@ -2,6 +2,7 @@
 
 import SpaceBriefcase from "./components/SpaceBriefcase";
 import Link from "next/link";
+import Image from "next/image";
 import { Orbitron, Syncopate, Rajdhani } from 'next/font/google';
 import { useState } from 'react';
 
@@ -93,18 +94,17 @@ export default function Home() {
             <Link href="/presskit" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              <img src="/fonts/presskit.png" alt="Press Kit" className="h-4 w-auto" />
+              <Image src="/fonts/presskit.png" alt="Press Kit" width={100} height={16} className="h-4 w-auto" />
             </Link>
             <Link href="/tours" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              <img src="/fonts/tours.png" alt="Tours" className="h-4 w-auto" />
-
+              <Image src="/fonts/tours.png" alt="Tours" width={100} height={16} className="h-4 w-auto" />
             </Link>
             <Link href="/contact" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              <img src="/fonts/cantactus.png" alt="Contact Us" className="h-4 w-auto" />
+              <Image src="/fonts/cantactus.png" alt="Contact Us" width={100} height={16} className="h-4 w-auto" />
             </Link>
           </div>
 

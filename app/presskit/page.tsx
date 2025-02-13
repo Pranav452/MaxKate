@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import Image from "next/image";
 import { Orbitron, Rajdhani } from 'next/font/google';
 import { motion } from 'framer-motion';
 
@@ -45,12 +46,6 @@ const pressAssets: PressAsset[] = [
     excerpt: "A collaborative masterpiece that showcases the emotional storytelling abilities of Max Kate and Xeede."
   }
 ];
-
-interface StickerProps {
-  children: React.ReactNode;
-  className?: string;
-  rotate?: number;
-}
 
 // Musical note decorative component
 const MusicalNote: React.FC<{ className?: string }> = ({ className = "" }) => (
@@ -185,13 +180,15 @@ export default function PressKitPage() {
                 <div className="space-y-6">
                   {/* Image Section */}
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6">
-                    <img
+                    <Image
                       src={index === 0 ? "/presskit/1st.jpg" : 
                            index === 1 ? "/presskit/2nd.webp" : 
                            index === 2 ? "/presskit/3rd.jpg" :
                            index === 3 ? "/presskit/4th.jpg" :
                            "https://placehold.co/600x400/purple/white/png?text=Coming+Soon"}
                       alt={`Press coverage image for ${asset.title}`}
+                      width={600}
+                      height={400}
                       className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
                     />
                   </div>
