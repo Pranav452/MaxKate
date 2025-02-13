@@ -93,24 +93,25 @@ export default function Home() {
             <Link href="/presskit" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              PRESS KIT
+              <img src="/fonts/presskit.png" alt="Press Kit" className="h-4 w-auto" />
             </Link>
             <Link href="/tours" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              TOURS
+              <img src="/fonts/tours.png" alt="Tours" className="h-4 w-auto" />
+
             </Link>
             <Link href="/contact" className={`${rajdhani.className} ${
               isDaylight ? 'text-black/80 hover:text-black' : 'text-white/80 hover:text-white'
             } transition-colors text-lg tracking-wider`}>
-              <img src="/fonts/cantactus.png" alt="Contact Us" className="h-3.5 w-auto" />
+              <img src="/fonts/cantactus.png" alt="Contact Us" className="h-4 w-auto" />
             </Link>
           </div>
 
           {/* Center Logo */}
           <h1 className={`${orbitron.className} ${
             isDaylight ? 'text-black' : 'text-white'
-          } font-black text-3xl absolute left-1/2 transform -translate-x-1/2 tracking-[0.001em] transition-colors duration-1500 font-captain`}>
+          }  text-3xl  absolute left-1/2 transform -translate-x-1/2 tracking-[0.001em] transition-colors duration-1500 font-medium leading-tight`}>
             MAX KATE
           </h1>
 
@@ -156,7 +157,7 @@ export default function Home() {
         href="/stage"
         className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 group"
       >
-        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+        <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
           <svg 
             className="w-8 h-8 text-white transform transition-transform duration-300 group-hover:translate-x-1" 
             fill="none" 

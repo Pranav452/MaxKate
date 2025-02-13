@@ -59,6 +59,10 @@ export default {
   			'bird-flight-1': 'bird-flight-1 20s linear infinite',
   			'bird-flight-2': 'bird-flight-2 25s linear infinite',
   			'bird-flight-3': 'bird-flight-3 30s linear infinite',
+        'smoke-1': 'smoke-rise-1 8s ease-in-out infinite',
+        'smoke-2': 'smoke-rise-2 9s ease-in-out infinite',
+        'smoke-3': 'smoke-rise-3 10s ease-in-out infinite',
+        'smoke-dissipate': 'smoke-dissipate 4s ease-out infinite',
   		},
   		keyframes: {
   			'vinyl-rotation': {
@@ -117,6 +121,58 @@ export default {
   				'50.001%': { transform: 'translate(-20vw, 5vh) rotate(6deg)' },
   				'100%': { transform: 'translate(0, 0) rotate(6deg)' },
   			},
+        'smoke-rise-1': {
+          '0%': { 
+            transform: 'translateY(100%) scale(1)',
+            opacity: '0.4'
+          },
+          '50%': { 
+            transform: 'translateY(40%) scale(1.4) translateX(-10%)',
+            opacity: '0.2'
+          },
+          '100%': { 
+            transform: 'translateY(-20%) scale(1.8) translateX(-20%)',
+            opacity: '0'
+          }
+        },
+        'smoke-rise-2': {
+          '0%': { 
+            transform: 'translateY(100%) scale(1)',
+            opacity: '0.4'
+          },
+          '50%': { 
+            transform: 'translateY(40%) scale(1.6) translateX(10%)',
+            opacity: '0.2'
+          },
+          '100%': { 
+            transform: 'translateY(-20%) scale(2) translateX(20%)',
+            opacity: '0'
+          }
+        },
+        'smoke-rise-3': {
+          '0%': { 
+            transform: 'translateY(100%) scale(1)',
+            opacity: '0.3'
+          },
+          '50%': { 
+            transform: 'translateY(50%) scale(1.2)',
+            opacity: '0.15'
+          },
+          '100%': { 
+            transform: 'translateY(-10%) scale(1.6)',
+            opacity: '0'
+          }
+        },
+        'smoke-dissipate': {
+          '0%': { 
+            filter: 'blur(5px)',
+            opacity: '0.4'
+          },
+          '100%': { 
+            filter: 'blur(15px)',
+            opacity: '0'
+          }
+        },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

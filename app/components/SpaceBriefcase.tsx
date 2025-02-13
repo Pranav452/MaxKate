@@ -10,11 +10,11 @@ const videos = [
   {
     id: 1,
     src: "/teaser1.mp4",
-    title: "LATEST TEASER"
+    title: "SARKMAX"
   },
   {
     id: 2,
-    src: "/teaser1.mp4", // You can replace this with the second video source
+    src: "/bigbang.mp4",
     title: "SECOND TEASER"
   }
 ];

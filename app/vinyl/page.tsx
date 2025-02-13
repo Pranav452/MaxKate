@@ -6,23 +6,72 @@ import { useState, useRef, useEffect } from "react";
 const songs = [
   {
     id: 1,
-    title: "Techno Dreams",
+    title: "Paradise",
     artist: "Max Kate",
     duration: "3:45",
     audioUrl: "/teaser1.mp4"
   },
   {
     id: 2,
-    title: "House Vibes",
-    artist: "Max Kate",
+    title: "Sink",
+    artist: "Max Kate & Xeede",
     duration: "4:20",
     audioUrl: "/teaser1.mp4"
   },
   {
     id: 3,
-    title: "Deep Journey",
+    title: "Gum Gaye",
+    artist: "Max Kate & Xeede",
+    duration: "4:15",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 4,
+    title: "18",
+    artist: "Max Kate & Xeede",
+    duration: "3:55",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 5,
+    title: "Zara",
     artist: "Max Kate",
-    duration: "5:15",
+    duration: "4:10",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 6,
+    title: "Khoye Se",
+    artist: "Max Kate & Xeede",
+    duration: "4:30",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 7,
+    title: "Young Again",
+    artist: "Max Kate feat. A.Dman",
+    duration: "4:25",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 8,
+    title: "Jiyein Aise Kyun",
+    artist: "Max Kate",
+    duration: "4:05",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 9,
+    title: "Don't Follow Me Now",
+    artist: "Max Kate",
+    duration: "4:15",
+    audioUrl: "/teaser1.mp4"
+  },
+  {
+    id: 10,
+    title: "I Was Born Again",
+    artist: "Max Kate & Xeede",
+    duration: "4:35",
     audioUrl: "/teaser1.mp4"
   }
 ];
@@ -144,7 +193,10 @@ export default function VinylPage() {
   }, [currentSong.audioUrl]);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-black to-zinc-900 overflow-hidden">
+    <div 
+      className="relative min-h-screen bg-cover bg-center overflow-hidden"
+      style={{ backgroundImage: 'url("/studio.jpg")' }}
+    >
       {/* Main Vinyl Container */}
       <div className="absolute inset-0 flex items-center justify-center">
         {/* Vinyl Record */}
@@ -274,7 +326,7 @@ export default function VinylPage() {
           Playlist
         </button>
 
-        <Link
+        {/* <Link
           href="/booking"
           className="group bg-white/10 backdrop-blur-sm p-4 rounded-full border border-white/20 
                    hover:bg-white/20 transition-all duration-300"
@@ -292,14 +344,15 @@ export default function VinylPage() {
               d="M9 5l7 7-7 7" 
             />
           </svg>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Playlist Dropdown */}
       {showPlaylist && (
         <div className="fixed top-24 right-8 w-80 bg-black/90 backdrop-blur-sm 
                      border border-white/20 rounded-xl overflow-hidden z-50">
-          {songs.map((song) => (
+          {/* First Three Songs - Always Visible */}
+          {/* {songs.slice(0, 3).map((song) => (
             <button
               key={song.id}
               onClick={() => {
@@ -312,7 +365,27 @@ export default function VinylPage() {
               <div className="text-white font-medium">{song.title}</div>
               <div className="text-white/60 text-sm">{song.artist}</div>
             </button>
-          ))}
+          ))} */}
+
+          {/* Scrollable Section for Remaining Songs - Fixed Height for 4 Songs */}
+          <div className="h-[256px] overflow-hidden">
+            <div className="overflow-y-auto h-full scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              {songs.slice(0).map((song) => (
+                <button
+                  key={song.id}
+                  onClick={() => {
+                    playSong(song);
+                    setShowPlaylist(false);
+                  }}
+                  className={`w-full px-6 py-4 text-left hover:bg-white/10 transition-colors
+                           ${currentSong.id === song.id ? 'bg-white/20' : ''}`}
+                >
+                  <div className="text-white font-medium">{song.title}</div>
+                  <div className="text-white/60 text-sm">{song.artist}</div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
@@ -321,7 +394,7 @@ export default function VinylPage() {
         href="/club"
         className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 group"
       >
-        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+        <div className="bg-black backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
           <svg 
             className="w-8 h-8 text-white transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1" 
             fill="none" 
@@ -342,7 +415,7 @@ export default function VinylPage() {
         href="/booking"
         className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 group"
       >
-        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
+        <div className="bg-black backdrop-blur-sm p-4 rounded-full cursor-pointer transition-all duration-300 hover:bg-white/30">
           <svg 
             className="w-8 h-8 text-white transform transition-transform duration-300 group-hover:translate-x-1" 
             fill="none" 
