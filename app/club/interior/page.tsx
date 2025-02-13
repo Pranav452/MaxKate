@@ -45,7 +45,7 @@ export default function ClubInterior() {
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
-  const mouseTimer = useRef<NodeJS.Timeout>();
+  const mouseTimer = useRef<NodeJS.Timeout | null>(null);
 
   // Format time in MM:SS
   const formatTime = (time: number) => {
@@ -81,19 +81,6 @@ export default function ClubInterior() {
     mouseTimer.current = setTimeout(() => {
       setShowControls(false);
     }, 3000); // Hide controls after 3 seconds of no mouse movement
-  };
-
-  // Handle video play/pause
-  const handleVideoPlayPause = () => {
-    const video = document.querySelector('video');
-    if (video) {
-      if (isPlaying) {
-        video.pause();
-      } else {
-        video.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
   };
 
   // Handle audio playback
