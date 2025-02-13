@@ -85,6 +85,7 @@ export default function VinylPage() {
   const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressRef = useRef<HTMLDivElement | null>(null);
+  const [volume, setVolume] = useState(1);
 
   const togglePlay = async () => {
     if (!audioRef.current) return;
@@ -158,6 +159,17 @@ export default function VinylPage() {
       const newTime = percentage * audioRef.current.duration;
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
+    }
+  };
+
+  const handleVolumeChange = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (progressRef.current && audioRef.current) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const percentage = x / rect.width;
+      const newVolume = Math.max(0, Math.min(1, percentage));
+      audioRef.current.volume = newVolume;
+      setVolume(newVolume);
     }
   };
 
@@ -264,6 +276,7 @@ export default function VinylPage() {
               <button 
                 onClick={playPrevious}
                 disabled={isLoading}
+                aria-label="Play previous song"
                 className="text-white/60 hover:text-white transition-colors disabled:opacity-50"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,6 +288,7 @@ export default function VinylPage() {
               <button
                 onClick={togglePlay}
                 disabled={isLoading}
+                aria-label={isPlaying ? "Pause" : "Play"}
                 className="w-14 h-14 rounded-full bg-white flex items-center justify-center
                          hover:scale-105 transition-transform disabled:opacity-50"
               >
@@ -295,6 +309,7 @@ export default function VinylPage() {
               <button 
                 onClick={playNext}
                 disabled={isLoading}
+                aria-label="Play next song"
                 className="text-white/60 hover:text-white transition-colors disabled:opacity-50"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,8 +323,14 @@ export default function VinylPage() {
               <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
               </svg>
-              <div className="w-24 bg-white/10 rounded-full h-1 cursor-pointer">
-                <div className="bg-white h-full rounded-full w-1/2" />
+              <div 
+                onClick={handleVolumeChange}
+                className="w-24 bg-white/10 rounded-full h-1 cursor-pointer"
+              >
+                <div 
+                  className="bg-white h-full rounded-full transition-all duration-150"
+                  style={{ width: `${volume * 100}%` }} 
+                />
               </div>
             </div>
           </div>
@@ -320,6 +341,8 @@ export default function VinylPage() {
       <div className="fixed top-8 right-8 z-50 flex items-center gap-4">
         <button
           onClick={() => setShowPlaylist(!showPlaylist)}
+          aria-label="Toggle playlist"
+          aria-expanded={showPlaylist}
           className="bg-white/10 backdrop-blur-sm px-6 py-3 
                    rounded-full text-white border border-white/20 hover:bg-white/20"
         >
