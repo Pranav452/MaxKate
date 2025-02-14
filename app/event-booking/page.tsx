@@ -189,7 +189,7 @@ export default function EventBookingPage() {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 p-8"
       >
-        <h1 className="text-4xl font-bold mb-4">Book Max Kate</h1>
+        <h1 className="text-4xl font-bold mb-4">Book MAX Kate</h1>
       </motion.div>
 
       {/* Main Content */}
