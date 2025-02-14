@@ -63,6 +63,7 @@ export default {
         'smoke-2': 'smoke-rise-2 9s ease-in-out infinite',
         'smoke-3': 'smoke-rise-3 10s ease-in-out infinite',
         'smoke-dissipate': 'smoke-dissipate 4s ease-out infinite',
+        'gradient-x': 'gradient-x 15s ease infinite',
   		},
   		keyframes: {
   			'vinyl-rotation': {
@@ -173,6 +174,16 @@ export default {
             opacity: '0'
           }
         },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          },
+        },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -181,6 +192,8 @@ export default {
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+  			'gradient-conic':
+  				'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
   		},
   		fontFamily: {
   			'captain': ['Captain America', 'sans-serif'],

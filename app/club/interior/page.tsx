@@ -14,10 +14,10 @@ interface MusicGenre {
 
 const musicGenres: MusicGenre[] = [
   {
-    title: "MonoRail",
+    title: "MONORAIL",
     description: "Experience the vibrant electronic beats at Garden Of Dreams, Goa. A mesmerizing journey through sound and rhythm.",
-    image: "/bg1.jpg",
-    video: "/nightdrive.mp4",
+    image: "/monorail.jpg",
+    video: "/mono.mp4",
     audio: "/monorail.mp3"
   },
   {
@@ -134,7 +134,7 @@ export default function ClubInterior() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black/95 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gradient-to-b from-black via-black/95 to-black/90 py-20">
       {/* Exit Button */}
       <Link 
         href="/club"
@@ -235,7 +235,7 @@ export default function ClubInterior() {
             </div>
 
             {/* Title */}
-            <div className={`absolute top-8 left-8 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
+            <div className={`absolute top-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
               <h2 className="text-4xl font-bold text-white">{selectedGenre.title}</h2>
             </div>
 
@@ -259,40 +259,63 @@ export default function ClubInterior() {
           </div>
         </div>
       ) : (
-        // Cards View
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-            {musicGenres.map((genre) => (
+        <div className="container mx-auto px-4">
+          {/* Hero Section */}
+          <div className="text-center mb-20 space-y-6">
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-gradient-x">
+              Experience The Sound
+            </h1>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+              Immerse yourself in a world of sonic excellence. Choose your vibe and let the music take control.
+            </p>
+            <div className="w-24 h-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 mx-auto rounded-full mt-8"></div>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 perspective-1000">
+            {musicGenres.map((genre, index) => (
               <div
                 key={genre.title}
                 onClick={() => setSelectedGenre(genre)}
-                className="group cursor-pointer"
+                className="group cursor-pointer transform transition-all duration-500 hover:scale-105"
+                style={{ animationDelay: `${index * 200}ms` }}
               >
-                <div className="bg-black border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition-all duration-300">
+                <div className="relative bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20">
                   {/* Card Image */}
-                  <div className="relative h-[300px] overflow-hidden">
+                  <div className="relative h-[200px] overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10" />
                     <Image
                       src={genre.image}
                       alt={genre.title}
                       fill
                       style={{ objectFit: 'cover' }}
-                      className="group-hover:scale-110 transition-transform duration-500"
+                      className="group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center">
+                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                          <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Card Content */}
-                  <div className="p-6 bg-gradient-to-b from-black/80 to-black">
-                    <h3 className="text-2xl font-bold text-white mb-3">
+                  <div className="p-8">
+                    <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors duration-300">
                       {genre.title}
                     </h3>
-                    <p className="text-white/80 text-lg">
+                    <p className="text-white/80 text-sm leading-relaxed">
                       {genre.description}
                     </p>
-                    <div className="mt-4 inline-flex items-center gap-2 text-white/60 group-hover:text-white/90 transition-colors duration-300">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="mt-6 inline-flex items-center gap-3 text-white/60 group-hover:text-white transition-colors duration-300">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                       </svg>
-                      <span className="text-sm">Watch Video</span>
+                      <span className="text-base font-medium">Experience Now</span>
                     </div>
                   </div>
                 </div>

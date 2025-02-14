@@ -9,7 +9,7 @@ const songs = [
     title: "Paradise",
     artist: "Max Kate",
     duration: "3:45",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-pla1- PARADISE.mp4"
   },
   {
     id: 2,
@@ -343,7 +343,7 @@ export default function VinylPage() {
           onClick={() => setShowPlaylist(!showPlaylist)}
           aria-label="Toggle playlist"
           aria-expanded={showPlaylist}
-          className="bg-white/10 backdrop-blur-sm px-6 py-3 
+          className="bg-black backdrop-blur-sm px-6 py-3 
                    rounded-full text-white border border-white/20 hover:bg-white/20"
         >
           Playlist
@@ -458,7 +458,7 @@ export default function VinylPage() {
       {/* Back to Club */}
       <Link
         href="/club"
-        className="fixed top-8 left-8 z-50 bg-white/10 backdrop-blur-sm px-6 py-3 
+        className="fixed top-8 left-8 z-50 bg-black backdrop-blur-sm px-6 py-3 
                  rounded-full text-white border border-white/20 hover:bg-white/20"
       >
         Back to Club
