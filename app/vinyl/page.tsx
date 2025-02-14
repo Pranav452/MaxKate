@@ -207,7 +207,7 @@ export default function VinylPage() {
   return (
     <div 
       className="relative min-h-screen bg-cover bg-center overflow-hidden"
-      style={{ backgroundImage: 'url("/studio.jpg")' }}
+      style={{ backgroundImage: 'url("/STUDIO.jpg")' }}
     >
       {/* Main Vinyl Container */}
       <div className="absolute inset-0 flex items-center justify-center">
