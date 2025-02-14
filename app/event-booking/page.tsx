@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface BookingOption {
   id: string;
@@ -18,8 +18,6 @@ interface BookingOption {
 
 export default function EventBookingPage() {
   const [selectedOption, setSelectedOption] = useState<BookingOption | null>(null);
-  const [hoveredOption, setHoveredOption] = useState<BookingOption | null>(null);
-  const [showConfetti, setShowConfetti] = useState(false);
   const [currentStep, setCurrentStep] = useState<'initial' | 'platinum' | 'performance' | 'details' | 'payment'>('initial');
   const [formData, setFormData] = useState({
     eventName: '',
@@ -143,9 +141,7 @@ export default function EventBookingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowConfetti(true);
     setCurrentStep('payment');
-    setTimeout(() => setShowConfetti(false), 5000);
   };
 
   const handleBack = () => {
