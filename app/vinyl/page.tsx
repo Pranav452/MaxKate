@@ -9,70 +9,70 @@ const songs = [
     title: "Paradise",
     artist: "Max Kate",
     duration: "3:45",
-    audioUrl: "/vinyl-pla1- PARADISE.mp4"
+    audioUrl: "/vinyl-playlist/1- PARADISE.wav"
   },
   {
     id: 2,
     title: "Sink",
     artist: "Max Kate & Xeede",
     duration: "4:20",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/2- SINK (BACKINGS).wav"
   },
   {
     id: 3,
     title: "Gum Gaye",
     artist: "Max Kate & Xeede",
     duration: "4:15",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/3- GUM GAYE.wav"
   },
   {
     id: 4,
     title: "18",
     artist: "Max Kate & Xeede",
     duration: "3:55",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/4 - 18 (DUET).wav"
   },
   {
     id: 5,
     title: "Zara",
     artist: "Max Kate",
     duration: "4:10",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/5 - ZARA (DUET).mp3"
   },
   {
     id: 6,
     title: "Khoye Se",
     artist: "Max Kate & Xeede",
     duration: "4:30",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/6 - KHOYE SE (BACKINGS).mp3"
   },
   {
     id: 7,
     title: "Young Again",
     artist: "Max Kate feat. A.Dman",
     duration: "4:25",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/7 - YOUNG AGAIN (BACKINGS).mp3"
   },
   {
     id: 8,
     title: "Jiyein Aise Kyun",
     artist: "Max Kate",
     duration: "4:05",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/8 - JIYEIN AISE KYUN (DUET).wav"
   },
   {
     id: 9,
     title: "Don't Follow Me Now",
     artist: "Max Kate",
     duration: "4:15",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/9 - DONT FOLLOW ME NOW (BACKINGS).wav"
   },
   {
     id: 10,
     title: "I Was Born Again",
     artist: "Max Kate & Xeede",
     duration: "4:35",
-    audioUrl: "/teaser1.mp4"
+    audioUrl: "/vinyl-playlist/10 - I WAS BORN AGAIN  (BACKINGS).wav"
   }
 ];
 
@@ -215,13 +215,13 @@ export default function VinylPage() {
         <div className="relative">
           {/* Vinyl Base */}
           <div className={`relative w-[500px] h-[500px] rounded-full bg-black 
-                        ${isPlaying ? 'animate-vinyl-spin' : ''} 
-                        transition-all duration-1000 ease-in-out`}>
+                        ${isPlaying ? 'animate-vinyl-spin' : 'transition-transform duration-1000'} 
+                        transform-gpu`}>
             {/* Vinyl Grooves */}
-            <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-white/5" />
-            <div className="absolute inset-[50px] rounded-full border-t-2 border-r-2 border-white/5" />
-            <div className="absolute inset-[100px] rounded-full border-t-2 border-r-2 border-white/5" />
-            <div className="absolute inset-[150px] rounded-full border-t-2 border-r-2 border-white/5" />
+            <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-white/5 transform-gpu" />
+            <div className="absolute inset-[50px] rounded-full border-t-2 border-r-2 border-white/5 transform-gpu" />
+            <div className="absolute inset-[100px] rounded-full border-t-2 border-r-2 border-white/5 transform-gpu" />
+            <div className="absolute inset-[150px] rounded-full border-t-2 border-r-2 border-white/5 transform-gpu" />
             
             {/* Center Label */}
             <div className="absolute top-1/2 left-1/2 w-[150px] h-[150px] -translate-x-1/2 -translate-y-1/2

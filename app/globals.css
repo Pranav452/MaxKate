@@ -99,6 +99,15 @@
   }
 }
 
+@keyframes vinylSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .star {
   position: absolute;
   width: 2px;
@@ -376,4 +385,10 @@ body {
 
 ::-webkit-scrollbar-corner {
     background: transparent;
+}
+
+.animate-vinyl-spin {
+  animation: vinylSpin 2s linear infinite;
+  transform-origin: center;
+  will-change: transform;
 }

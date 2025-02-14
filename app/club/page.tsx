@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function ClubPage() {
   return (
     <div className="relative min-h-screen">
-      {/* Background Image with Flickering Effect */}
-      <div className="fixed inset-0 -z-10 animate-flicker">
+      {/* Background Image without Flickering Effect */}
+      <div className="fixed inset-0 -z-10">
         <Image
           src="/clubbg.jpg"
           alt="Club Background"
@@ -17,11 +17,11 @@ export default function ClubPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
       </div>
 
-      {/* Light Effects */}
+      {/* Static Light Effects */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-1 h-1 bg-blue-500 blur-xl animate-pulse" />
-        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-purple-500 blur-xl animate-pulse" style={{ animationDelay: '0.5s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-red-500 blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-0 left-1/4 w-1 h-1 bg-blue-500/50 blur-xl" />
+        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-purple-500/50 blur-xl" />
+        <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-red-500/50 blur-xl" />
       </div>
 
       {/* Content */}

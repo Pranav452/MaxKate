@@ -90,9 +90,9 @@ export default function BookingPage() {
     platinum: {
       id: 'platinum',
       name: 'PLATINUM',
-      color: 'bg-gradient-to-br from-slate-300 to-slate-100',
-      hoverColor: 'hover:from-slate-200 hover:to-white',
-      selectedColor: 'bg-gradient-to-br from-slate-200 to-white',
+      color: 'bg-gradient-to-br from-blue-500 to-cyan-500',
+      hoverColor: 'hover:from-blue-400 hover:to-cyan-400',
+      selectedColor: 'bg-gradient-to-br from-blue-400 to-cyan-400',
       price: 499,
       perks: [
         'Front row view of Max Kate',
@@ -113,7 +113,7 @@ export default function BookingPage() {
     vip: {
       id: 'vip',
       name: 'VIP',
-      color: 'bg-gradient-to-br from-purple-600 to-pink-600',
+      color: 'bg-gradient-to-br from-purple-500 to-pink-500',
       hoverColor: 'hover:from-purple-500 hover:to-pink-500',
       selectedColor: 'bg-gradient-to-br from-purple-500 to-pink-500',
       price: 399,
@@ -157,9 +157,9 @@ export default function BookingPage() {
     silver: {
       id: 'silver',
       name: 'SILVER',
-      color: 'bg-gradient-to-br from-gray-400 to-gray-300',
-      hoverColor: 'hover:from-gray-300 hover:to-gray-200',
-      selectedColor: 'bg-gradient-to-br from-gray-300 to-gray-200',
+      color: 'bg-gradient-to-br from-teal-500 to-cyan-400',
+      hoverColor: 'hover:from-teal-400 hover:to-cyan-300',
+      selectedColor: 'bg-gradient-to-br from-teal-400 to-cyan-300',
       price: 199,
       perks: [
         'Great atmosphere',
@@ -337,7 +337,18 @@ export default function BookingPage() {
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-black to-black" />
+        <video 
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-label="Concert background video"
+          preload="auto"
+        >
+          <source src="/stadium-view.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black/40 to-black" />
         <div className="absolute inset-0 opacity-30">
           <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" 
                style={{ transform: 'translate(-50%, -50%) scale(2)', top: '50%', left: '50%' }} />
@@ -718,6 +729,27 @@ export default function BookingPage() {
               d="M9 5l7 7-7 7" 
             />
           </svg>
+        </div>
+      </Link>
+      <Link
+        href="/event-booking"
+        className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 group"
+      >
+        <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full cursor-pointer 
+                     transition-all duration-300 hover:bg-white/30">
+      <svg 
+              className="w-8 h-8 text-white transform transition-transform duration-300 group-hover:translate-x-1" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M9 5l7 7-7 7" 
+              />
+            </svg>
         </div>
       </Link>
 
