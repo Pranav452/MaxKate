@@ -123,7 +123,7 @@ export default function Home() {
                 isDaylight 
                   ? 'bg-black/10 text-black hover:bg-black/20 border-black/20' 
                   : 'bg-white/10 text-white hover:bg-white/20 border-white/20'
-              } backdrop-blur-sm px-6 py-2 pt-4 rounded-full border text-xs
+              } backdrop-blur-sm px-6 py-2  rounded-full border text-xs
               transition-all duration-300 tracking-[0.15em] font-bold`}
               disabled
             >
