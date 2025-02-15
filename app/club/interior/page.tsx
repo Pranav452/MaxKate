@@ -110,16 +110,6 @@ export default function ClubInterior() {
     }
   };
 
-  // Handle seeking
-  const handleSeek = (seconds: number) => {
-    if (audioElement) {
-      const newTime = Math.max(0, Math.min(audioElement.currentTime + seconds, audioDuration));
-      audioElement.currentTime = newTime;
-      setAudioCurrentTime(newTime);
-      setAudioProgress((newTime / audioDuration) * 100);
-    }
-  };
-
   // Handle volume mouse down
   const handleVolumeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDraggingVolume(true);
@@ -227,7 +217,7 @@ export default function ClubInterior() {
         clearTimeout(mouseTimer.current);
       }
     };
-  }, [isDraggingVolume]);
+  }, [isDraggingVolume, handleVolumeChange]);
 
   // Handle exit
   const handleExit = () => {
