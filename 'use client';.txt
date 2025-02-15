@@ -1,0 +1,682 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { useCallback } from 'react';
+import ReactConfetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
+
+interface Seat {
+  id: string;
+  row: string;
+  number: number;
+  status: 'available' | 'taken' | 'selected';
+  price: number;
+}
+
+interface Section {
+  id: string;
+  name: string;
+  color: string;
+  hoverColor: string;
+  selectedColor: string;
+  price: number;
+  perks: string[];
+  available: boolean;
+  totalSeats: number;
+  availableSeats: number;
+  image: string;
+  rows: number;
+  seatsPerRow: number;
+  seats: Seat[];
+  description: string;
+  type: 'fanpit' | 'vip' | 'premium' | 'deck' | 'regular';
+  position?: 'left' | 'right' | 'center';
+}
+
+export default function BookingPage() {
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const [hoveredSection, setHoveredSection] = useState<Section | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [showSeatingMap, setShowSeatingMap] = useState(false);
+  const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [currentStep, setCurrentStep] = useState<'section' | 'seats' | 'payment'>('section');
+  const [showTooltip, setShowTooltip] = useState(false);
+  const controls = useAnimation();
+  const { width, height } = useWindowSize();
+
+  // Handle confetti cleanup
+  useEffect(() => {
+    if (showConfetti) {
+      const timer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti]);
+
+  // Show tooltip on first visit
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem('hasSeenBookingTooltip');
+    if (!hasSeenTooltip) {
+      setShowTooltip(true);
+      localStorage.setItem('hasSeenBookingTooltip', 'true');
+      const timer = setTimeout(() => setShowTooltip(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Generate seats for a section
+  const generateSeats = useCallback((section: string, rows: number, seatsPerRow: number, basePrice: number): Seat[] => {
+    const seats: Seat[] = [];
+    const rowLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
+    for (let i = 0; i < rows; i++) {
+      for (let j = 1; j <= seatsPerRow; j++) {
+        const status = Math.random() > 0.3 ? 'available' : 'taken';
+        seats.push({
+          id: `${section}-${rowLetters[i]}-${j}`,
+          row: rowLetters[i],
+          number: j,
+          status,
+          price: basePrice + (rows - i) * 10 // Price increases for front rows
+        });
+      }
+    }
+    return seats;
+  }, []);
+
+  const sections: Record<string, Section> = {
+    fanpitA: {
+      id: 'fanpitA',
+      name: 'FAN PIT A',
+      color: 'bg-purple-500',
+      hoverColor: 'hover:bg-purple-400',
+      selectedColor: 'bg-purple-400',
+      price: 1500,
+      perks: [
+        'Closest to stage',
+        'Exclusive fan pit experience',
+        'Early entry',
+        'Special merchandise'
+      ],
+      available: true,
+      totalSeats: 100,
+      availableSeats: 45,
+      image: '/fanpit-section.jpg',
+      rows: 5,
+      seatsPerRow: 20,
+      seats: [],
+      description: 'Get the ultimate front-row experience in Fan Pit A',
+      type: 'fanpit',
+      position: 'left'
+    },
+    fanpitB: {
+      id: 'fanpitB',
+      name: 'FAN PIT B',
+      color: 'bg-purple-500',
+      hoverColor: 'hover:bg-purple-400',
+      selectedColor: 'bg-purple-400',
+      price: 1500,
+      perks: [
+        'Closest to stage',
+        'Exclusive fan pit experience',
+        'Early entry',
+        'Special merchandise'
+      ],
+      available: true,
+      totalSeats: 100,
+      availableSeats: 55,
+      image: '/fanpit-section.jpg',
+      rows: 5,
+      seatsPerRow: 20,
+      seats: [],
+      description: 'Get the ultimate front-row experience in Fan Pit B',
+      type: 'fanpit',
+      position: 'right'
+    },
+    vipA: {
+      id: 'vipA',
+      name: 'VIP FLOOR A',
+      color: 'bg-cyan-500',
+      hoverColor: 'hover:bg-cyan-400',
+      selectedColor: 'bg-cyan-400',
+      price: 1000,
+      perks: [
+        'Premium floor access',
+        'Dedicated bar access',
+        'VIP entrance'
+      ],
+      available: true,
+      totalSeats: 200,
+      availableSeats: 120,
+      image: '/vip-section.jpg',
+      rows: 10,
+      seatsPerRow: 20,
+      seats: [],
+      description: 'Experience premium floor access in VIP section A',
+      type: 'vip',
+      position: 'left'
+    },
+    vipB: {
+      id: 'vipB',
+      name: 'VIP FLOOR B',
+      color: 'bg-cyan-500',
+      hoverColor: 'hover:bg-cyan-400',
+      selectedColor: 'bg-cyan-400',
+      price: 1000,
+      perks: [
+        'Premium floor access',
+        'Dedicated bar access',
+        'VIP entrance'
+      ],
+      available: true,
+      totalSeats: 200,
+      availableSeats: 130,
+      image: '/vip-section.jpg',
+      rows: 10,
+      seatsPerRow: 20,
+      seats: [],
+      description: 'Experience premium floor access in VIP section B',
+      type: 'vip',
+      position: 'right'
+    },
+    gaPremium: {
+      id: 'gaPremium',
+      name: 'GA PREMIUM',
+      color: 'bg-violet-500',
+      hoverColor: 'hover:bg-violet-400',
+      selectedColor: 'bg-violet-400',
+      price: 800,
+      perks: [
+        'Premium viewing area',
+        'Access to main bars',
+        'Priority entry'
+      ],
+      available: true,
+      totalSeats: 500,
+      availableSeats: 300,
+      image: '/ga-premium.jpg',
+      rows: 20,
+      seatsPerRow: 25,
+      seats: [],
+      description: 'Premium general admission area with great views',
+      type: 'premium'
+    },
+    platinum: {
+      id: 'platinum',
+      name: 'PLATINUM',
+      color: 'bg-gradient-to-br from-blue-500 to-cyan-500',
+      hoverColor: 'hover:from-blue-400 hover:to-cyan-400',
+      selectedColor: 'bg-gradient-to-br from-blue-400 to-cyan-400',
+      price: 499,
+      perks: [
+        'Front row view of Max Kate',
+        'Exclusive meet & greet opportunity',
+        'Complimentary drinks',
+        'VIP entrance',
+        'Limited to 50 seats'
+      ],
+      available: true,
+      totalSeats: 50,
+      availableSeats: 32,
+      image: '/platinum-section.jpg',
+      rows: 5,
+      seatsPerRow: 10,
+      seats: generateSeats('platinum', 5, 10, 499),
+      description: 'Experience the ultimate VIP treatment with our Platinum section.',
+      type: 'deck'
+    },
+    vip: {
+      id: 'vip',
+      name: 'VIP',
+      color: 'bg-gradient-to-br from-purple-500 to-pink-500',
+      hoverColor: 'hover:from-purple-500 hover:to-pink-500',
+      selectedColor: 'bg-gradient-to-br from-purple-500 to-pink-500',
+      price: 399,
+      perks: [
+        'Premium stage view',
+        'Dedicated bar access',
+        'VIP entrance',
+        'Limited to 100 seats'
+      ],
+      available: true,
+      totalSeats: 100,
+      availableSeats: 65,
+      image: '/vip-section.jpg',
+      rows: 10,
+      seatsPerRow: 10,
+      seats: generateSeats('vip', 10, 10, 399),
+      description: 'Enjoy the best view of the stage with our VIP section.',
+      type: 'vip'
+    },
+    gold: {
+      id: 'gold',
+      name: 'GOLD',
+      color: 'bg-gradient-to-br from-amber-500 to-yellow-500',
+      hoverColor: 'hover:from-amber-400 hover:to-yellow-400',
+      selectedColor: 'bg-gradient-to-br from-amber-400 to-yellow-400',
+      price: 299,
+      perks: [
+        'Excellent viewing position',
+        'Priority entry',
+        'Access to premium bars',
+        'Limited to 200 seats'
+      ],
+      available: true,
+      totalSeats: 200,
+      availableSeats: 120,
+      image: '/gold-section.jpg',
+      rows: 10,
+      seatsPerRow: 10,
+      seats: generateSeats('gold', 10, 10, 299),
+      description: 'Experience the best view of the stage with our GOLD section.',
+      type: 'deck'
+    },
+    silver: {
+      id: 'silver',
+      name: 'SILVER',
+      color: 'bg-gradient-to-br from-teal-500 to-cyan-400',
+      hoverColor: 'hover:from-teal-400 hover:to-cyan-300',
+      selectedColor: 'bg-gradient-to-br from-teal-400 to-cyan-300',
+      price: 199,
+      perks: [
+        'Great atmosphere',
+        'General admission entry',
+        'Access to main bars',
+        'Limited to 500 seats'
+      ],
+      available: true,
+      totalSeats: 500,
+      availableSeats: 350,
+      image: '/silver-section.jpg',
+      rows: 20,
+      seatsPerRow: 10,
+      seats: generateSeats('silver', 20, 10, 199),
+      description: 'Enjoy the great atmosphere with our SILVER section.',
+      type: 'regular'
+    }
+  };
+
+  const handleSectionClick = async (section: Section) => {
+    await controls.start({
+      scale: [1, 1.1, 1],
+      transition: { duration: 0.3 }
+    });
+    setSelectedSection(section);
+    setIsZoomed(true);
+    setCurrentStep('seats');
+    setTimeout(() => setShowSeatingMap(true), 500);
+  };
+
+  const handleClose = () => {
+    setShowSeatingMap(false);
+    setSelectedSeats([]);
+    setCurrentStep('section');
+    setTimeout(() => {
+      setIsZoomed(false);
+      setSelectedSection(null);
+    }, 300);
+  };
+
+  const handleSeatClick = (seat: Seat) => {
+    if (seat.status === 'taken') return;
+
+    setSelectedSeats(prev => {
+      const isSelected = prev.some(s => s.id === seat.id);
+      if (isSelected) {
+        return prev.filter(s => s.id !== seat.id);
+      } else {
+        return [...prev, seat];
+      }
+    });
+  };
+
+  const handleBooking = async () => {
+    if (selectedSeats.length === 0) return;
+    
+    setShowConfetti(true);
+    await controls.start({
+      scale: [1, 1.05, 1],
+      transition: { duration: 0.3 }
+    });
+    setCurrentStep('payment');
+
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderSeatingMap = () => {
+    if (!selectedSection) return null;
+
+    const rowLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const rows = Array.from({ length: selectedSection.rows });
+    const seatsPerRow = Array.from({ length: selectedSection.seatsPerRow });
+
+    return (
+      <div className="grid gap-4">
+        {/* Stage Indicator */}
+        <div className="w-full h-12 bg-blue-600/20 rounded-full mb-8 flex items-center justify-center">
+          <span className="text-sm font-semibold text-blue-400">STAGE</span>
+        </div>
+
+        {/* Seats Grid */}
+        <div className="grid gap-6">
+          {rows.map((_, rowIndex) => (
+            <div key={rowIndex} className="flex items-center gap-4">
+              {/* Row Label */}
+              <div className="w-6 text-center text-sm font-medium text-white/60">
+                {rowLetters[rowIndex]}
+              </div>
+
+              {/* Seats */}
+              <div className="flex gap-1 flex-1 justify-center">
+                {seatsPerRow.map((_, seatIndex) => {
+                  const seat = selectedSection.seats.find(
+                    s => s.row === rowLetters[rowIndex] && s.number === seatIndex + 1
+                  );
+                  if (!seat) return null;
+
+                  const isSelected = selectedSeats.some(s => s.id === seat.id);
+                  
+                  return (
+                    <motion.button
+                      key={seat.id}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleSeatClick(seat)}
+                      className={`w-6 h-6 rounded-t-lg relative group ${
+                        seat.status === 'taken' 
+                          ? 'bg-gray-700 cursor-not-allowed'
+                          : isSelected
+                            ? 'bg-blue-500 hover:bg-blue-600'
+                            : 'bg-green-500 hover:bg-green-600'
+                      }`}
+                      disabled={seat.status === 'taken'}
+                    >
+                      {/* Seat Number Tooltip */}
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
+                                  bg-black/90 text-white text-xs px-2 py-1 rounded whitespace-nowrap transition-opacity">
+                        {seat.row}{seat.number} - ${seat.price}
+                      </div>
+                      {/* Seat Icon */}
+                      <div className="absolute inset-1 border-t-2 border-x-2 rounded-t-md
+                                  border-white/20 group-hover:border-white/40 transition-colors" />
+                    </motion.button>
+                  );
+                })}
+              </div>
+
+              {/* Row Label (right side) */}
+              <div className="w-6 text-center text-sm font-medium text-white/60">
+                {rowLetters[rowIndex]}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Legend and Summary */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Legend */}
+          <div className="flex items-center gap-6 text-sm text-white/70">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-t-lg bg-green-500"></div>
+              <span>Available</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-t-lg bg-gray-700"></div>
+              <span>Taken</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-t-lg bg-blue-500"></div>
+              <span>Selected</span>
+            </div>
+          </div>
+
+          {/* Summary */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-white/70">Selected Seats:</span>
+              <span className="font-medium">
+                {selectedSeats.map(s => `${s.row}${s.number}`).join(', ')}
+              </span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-white/70">Total Price:</span>
+              <span className="font-medium">
+                ${selectedSeats.reduce((sum, seat) => sum + seat.price, 0)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Video Background */}
+      <div className="fixed inset-0 -z-10">
+        <video 
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+          aria-label="Concert background video"
+          preload="auto"
+        >
+          <source src="/stadium-view.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80" />
+      </div>
+
+      {/* Header */}
+      <header className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/vinyl" className="p-1.5 hover:bg-white/10 rounded-full transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </Link>
+            <div>
+              <h1 className="text-base font-bold">MARTIN GARRIX - World's Biggest Holi</h1>
+              <p className="text-xs text-gray-400">Fri 14 Mar at 2:00 PM | D.Y. Patil Stadium: Navi Mumbai</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-300">2 Tickets</span>
+            <Link href="/event-booking" className="p-1.5 hover:bg-white/10 rounded-full transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex gap-6">
+          {/* Left Sidebar - Price Categories */}
+          <div className="w-56 flex-shrink-0">
+            <p className="text-xs text-gray-400 mb-3">Select your preferred category</p>
+            <div className="space-y-1.5">
+              {Object.entries(sections).map(([key, section]) => (
+                <button 
+                  key={key}
+                  onClick={() => handleSectionClick(section)}
+                  className="w-full flex items-center justify-between p-2 rounded-md hover:bg-white/5 transition-colors border border-white/10"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${section.color}`} />
+                    <span className="text-sm">₹ {section.price}</span>
+                  </div>
+                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Stadium Layout */}
+          <div className="flex-1 relative">
+            <div className={`transform transition-all duration-500 ${isZoomed ? 'scale-125' : 'scale-100'}`}>
+              {/* Stage */}
+              <div className="w-full h-16 bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 font-medium rounded-lg mb-6">
+                STAGE
+              </div>
+
+              {/* Main Layout */}
+              <div className="relative">
+                {/* Fan Pit Areas */}
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-white/5 rounded-lg" />
+                    <div className="relative p-2">
+                      <div className="h-12 bg-purple-900/50 border border-purple-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-purple-900/70 transition-colors"
+                           onClick={() => handleSectionClick(sections.fanpitA)}>
+                        <span className="text-xs font-medium text-purple-200">FAN PIT A</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-white/5 rounded-lg" />
+                    <div className="relative p-2">
+                      <div className="h-12 bg-purple-900/50 border border-purple-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-purple-900/70 transition-colors"
+                           onClick={() => handleSectionClick(sections.fanpitB)}>
+                        <span className="text-xs font-medium text-purple-200">FAN PIT B</span>
+                      </div>
+                    </div>
+                  </div>
+                      </div>
+
+                {/* VIP Floor Areas */}
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div className="h-24 bg-cyan-900/50 border border-cyan-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-cyan-900/70 transition-colors"
+                       onClick={() => handleSectionClick(sections.vipA)}>
+                    <span className="text-xs font-medium text-cyan-200">VIP FLOOR A</span>
+                      </div>
+                  <div className="h-24 bg-cyan-900/50 border border-cyan-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-cyan-900/70 transition-colors"
+                       onClick={() => handleSectionClick(sections.vipB)}>
+                    <span className="text-xs font-medium text-cyan-200">VIP FLOOR B</span>
+                  </div>
+                </div>
+
+                {/* GA Premium */}
+                <div className="h-32 bg-violet-900/50 border border-violet-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-violet-900/70 transition-colors mb-3"
+                     onClick={() => handleSectionClick(sections.gaPremium)}>
+                  <span className="text-xs font-medium text-violet-200">GA PREMIUM</span>
+                  </div>
+
+                {/* Tables and Deck */}
+                <div className="space-y-1.5">
+                  <div className="h-10 bg-amber-900/50 border border-amber-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-amber-900/70 transition-colors">
+                    <span className="text-xs font-medium text-amber-200">DIAMOND TABLES</span>
+                  </div>
+                  <div className="h-10 bg-yellow-900/50 border border-yellow-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-yellow-900/70 transition-colors">
+                    <span className="text-xs font-medium text-yellow-200">GOLD TABLES</span>
+                  </div>
+                  <div className="h-10 bg-emerald-900/50 border border-emerald-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-emerald-900/70 transition-colors">
+                    <span className="text-xs font-medium text-emerald-200">PLATINUM DECK</span>
+                  </div>
+                </div>
+
+                {/* Side Sections */}
+                <div className="absolute left-0 top-24 bottom-0 w-20 flex flex-col justify-between">
+                  {['M', 'N', 'O', 'P'].map((section) => (
+                    <div key={section} 
+                         className="h-12 bg-blue-900/50 border border-blue-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-blue-900/70 transition-colors">
+                      <span className="text-xs font-medium text-blue-200">Level {section}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="absolute right-0 top-24 bottom-0 w-20 flex flex-col justify-between">
+                  {['A', 'B', 'C', 'D'].map((section) => (
+                    <div key={section}
+                         className="h-12 bg-blue-900/50 border border-blue-500/30 rounded flex items-center justify-center cursor-pointer hover:bg-blue-900/70 transition-colors">
+                      <span className="text-xs font-medium text-blue-200">Level {section}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+      </div>
+
+            {/* Zoom Controls */}
+            <div className="absolute bottom-4 right-4 flex gap-1.5">
+              <button className="p-1.5 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+          </svg>
+              </button>
+              <button className="p-1.5 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Section Details Modal */}
+      <AnimatePresence>
+        {selectedSection && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-gray-900/90 backdrop-blur-sm rounded-xl w-full max-w-2xl m-4 overflow-hidden border border-white/10"
+            >
+              <div className="p-4 border-b border-white/10">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold">{selectedSection.name}</h2>
+                  <button onClick={handleClose} className="p-1.5 hover:bg-white/10 rounded-full transition-colors">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-4">
+                {renderSeatingMap()}
+              </div>
+
+              <div className="p-4 bg-black/20 border-t border-white/10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-gray-400">Total Amount</p>
+                    <p className="text-xl font-bold">₹ {selectedSeats.reduce((sum, seat) => sum + seat.price, 0)}</p>
+                  </div>
+                  <button
+                    onClick={handleBooking}
+                    disabled={selectedSeats.length === 0}
+                    className={`px-6 py-2 rounded-lg text-sm font-medium ${
+                      selectedSeats.length === 0
+                        ? 'bg-white/10 text-gray-400 cursor-not-allowed'
+                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                    }`}
+                  >
+                    {selectedSeats.length === 0 ? 'Select seats to continue' : 'Proceed to pay'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+} 

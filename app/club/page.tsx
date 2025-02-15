@@ -77,10 +77,10 @@ export default function ClubPage() {
         </Link>
         
         {/* Enter Button */}
-        <div className="fixed bottom-12 right-12">
+        <div className="fixed bottom-12 right-8">
           <Link href="/club/interior">
             <button 
-              className="bg-white/10 backdrop-blur-sm text-white border-2 border-white/50 px-8 py-4 rounded-full text-xl font-bold 
+              className="bg-white/10 backdrop-blur-sm text-white border-2 border-white/50 px-6 py-3 rounded-full text-md font-bold 
                        transform transition-all duration-500 hover:scale-110 hover:bg-white/20 hover:border-white
                        animate-pulse"
             >

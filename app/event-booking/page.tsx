@@ -180,7 +180,7 @@ export default function EventBookingPage() {
         >
           <source src="/stadium-view.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black/40 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black/10 to-black" />
       </div>
 
       {/* Header */}

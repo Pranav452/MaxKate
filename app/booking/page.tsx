@@ -348,7 +348,7 @@ export default function BookingPage() {
         >
           <source src="/stadium-view.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black/40 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black/10 to-black" />
         <div className="absolute inset-0 opacity-30">
           <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" 
                style={{ transform: 'translate(-50%, -50%) scale(2)', top: '50%', left: '50%' }} />

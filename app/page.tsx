@@ -24,7 +24,7 @@ export default function Home() {
         {/* Dynamic Sky Effects */}
         <div className={`absolute inset-0 transition-opacity duration-1500 ${isDaylight ? 'opacity-100' : 'opacity-0'}`}>
           {/* Sun with Rays */}
-          <div className="absolute top-20 left-1/2 -translate-x-1/2">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2">
             {/* Main Sun */}
             <div className="relative w-40 h-40">
               <div className="absolute inset-0 rounded-full bg-gradient-to-b from-yellow-100 via-yellow-200 to-yellow-300 
@@ -41,8 +41,9 @@ export default function Home() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] 
                          bg-gradient-radial from-yellow-100/20 via-transparent to-transparent"></div>
           
+          
           {/* Cloud Groups */}
-          <div className="absolute top-[8%] left-[5%] flex gap-6 animate-float" style={{ animationDuration: '6s' }}>
+          <div className="absolute top-[10%] left-[5%] flex gap-6 animate-float" style={{ animationDuration: '6s' }}>
             <div className="relative">
               <div className="w-32 h-12 bg-white rounded-full filter blur-[2px] opacity-90"></div>
               <div className="absolute -right-4 top-1 w-24 h-10 bg-white rounded-full filter blur-[2px] opacity-95"></div>
